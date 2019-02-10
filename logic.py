@@ -1,7 +1,9 @@
 import copy
 import setup
 import string
+
 import common
+import draw
    
 
 def get_team(teams, ip):
@@ -57,7 +59,8 @@ def main(config):
             it2 = its[1]
             print(its)
             txt = "w: {} t: {} ex-r: {} r: {}"
-            print(txt.format(it.word, it.team_id, it.revealed, it2.revealed))
+            draw.board(new_board)
+            # print(txt.format(it.word, it.team_id, it.revealed, it2.revealed))
         print(guess)
         break
         state = new_state
