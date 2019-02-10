@@ -2,20 +2,8 @@
 from bottle import route, run, request, template, static_file
 import random
 
-import common
-
-
-def getTeam(teams, ip):
-    for teamname, team_ips in teams.items():
-        if ip in team_ips:
-            return teamname
-
-
-def getPlayerClass(teams, spymasters, ip):
-    playerClass = getTeam(teams=teams, ip=ip) + "player"
-    if ip in spymasters:
-        playerClass += " spymaster"
-    return playerClass
+from . import common
+from .logic import get_team as getTeam, get_player_class as getPlayerClass
 
 
 def setupMatch(word_list, deck_size):
@@ -26,10 +14,7 @@ def setupMatch(word_list, deck_size):
     revealed = [False] * deck_size
     r = b = 8
     blue_first = (random.randint(0,1) == 0)
-    if blue_first:
-        b += 1
-    else:
-        r += 1
+    b, r = (b + 1, r) if blue_first else (b, r + 1)
     spies = [0] * deck_size
     spies[random.randint(0, deck_size - 1)] = -1
     while b > 0 or r > 0:
